@@ -2,6 +2,8 @@ name: Learning GitHub Script
 on:
   issues:
     types: [opened, edited]
+  issue_comment:
+    type: [created]
 jobs:
   comment:
     runs-on: ubuntu-latest
