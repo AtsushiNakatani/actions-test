@@ -6,17 +6,7 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - name: echo github
-        run: echo '${{ github }}'
-
-      - name: echo github.event_name
-        run: echo '${{ github.event_name }}'
-
-      - name: echo secrets.GITHUB_TOKEN
-        run: echo '${{ secrets.GITHUB_TOKEN }}'
-    # steps:
       - uses: actions/github-script@v6
         with:
           script: |
             const token = ${{ secrets.GITHUB_TOKEN }};
-            console.log(token);
