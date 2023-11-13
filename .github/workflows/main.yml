@@ -11,4 +11,5 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const token = ${{ github.token }};
+            import * as github from "@actions/github";
+            console.log(token);
