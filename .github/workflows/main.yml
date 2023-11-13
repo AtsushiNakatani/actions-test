@@ -6,31 +6,39 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/github-script@v6
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
-          const { pull_request } = context.payload;
-          const repo = context.repo;
-          const octokit = github.getOctokit(github-token);
+      - name: echo github
+        run: echo '${{ github }}'
 
-          // ここに承認状況をチェックするロジックを書きます
-          // 例：必要な承認数を定義
-          const REQUIRED_APPROVALS = 2;
+      - name: echo github.event_name
+        run: echo '${{ github.event_name }}'
 
-          async function checkApprovals() {
-            const { data: reviews } = await octokit.pulls.listReviews({
-              owner: repo.owner,
-              repo: repo.repo,
-              pull_number: pull_request.number,
-            });
-
-            // 承認の数を数える
-            const approvals = reviews.filter(review => review.state === 'APPROVED').length;
-
-            if (approvals < REQUIRED_APPROVALS) {
-              throw new Error(`Not enough approvals. Only ${approvals} of ${REQUIRED_APPROVALS} required approvals received.`);
+      - name: echo secrets.GITHUB_TOKEN
+        run: echo '${{ secrets.GITHUB_TOKEN }}'
+    # steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const { pull_request } = context.payload;
+            const repo = context.repo;
+            const octokit = github.getOctokit(github-token);
+  
+            // ここに承認状況をチェックするロジックを書きます
+            // 例：必要な承認数を定義
+            const REQUIRED_APPROVALS = 2;
+  
+            async function checkApprovals() {
+              const { data: reviews } = await octokit.pulls.listReviews({
+                owner: repo.owner,
+                repo: repo.repo,
+                pull_number: pull_request.number,
+              });
+  
+              // 承認の数を数える
+              const approvals = reviews.filter(review => review.state === 'APPROVED').length;
+  
+              if (approvals < REQUIRED_APPROVALS) {
+                throw new Error(`Not enough approvals. Only ${approvals} of ${REQUIRED_APPROVALS} required approvals received.`);
+              }
             }
-          }
-
-          await checkApprovals();
+  
+            await checkApprovals();
