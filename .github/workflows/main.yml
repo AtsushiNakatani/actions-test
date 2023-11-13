@@ -20,6 +20,12 @@ jobs:
           script: |
             const { pull_request } = context.payload;
             const repo = context.repo;
+            const token = ${{ secrets.GITHUB_TOKEN }};
+            if (!token) {
+              console.log('GITHUB_TOKEN not exist');
+              return;
+            }
+
             const octokit = github.getOctokit(github-token);
   
             // ここに承認状況をチェックするロジックを書きます
