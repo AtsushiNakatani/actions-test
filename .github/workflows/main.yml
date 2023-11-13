@@ -1,9 +1,9 @@
 name: Learning GitHub Script
 on:
   issues:
-    types: [opened, edited]
+    types: [opened]
   issue_comment:
-    type: [created]
+    type: [created, edited]
 jobs:
   comment:
     runs-on: ubuntu-latest
@@ -11,4 +11,4 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const token = ${{ secrets.GITHUB_TOKEN }};
+            const token = ${{ github.token }};
