@@ -19,9 +19,4 @@ jobs:
         with:
           script: |
             const token = ${{ secrets.GITHUB_TOKEN }};
-            if (!token) {
-              console.log('GITHUB_TOKEN not exist !!!');
-              return;
-            } else {
-              console.log('GITHUB_TOKEN exist !!!');
-            }
+            console.log(token);
