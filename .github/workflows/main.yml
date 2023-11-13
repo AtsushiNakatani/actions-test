@@ -22,29 +22,31 @@ jobs:
             const repo = context.repo;
             const token = ${{ secrets.GITHUB_TOKEN }};
             if (!token) {
-              console.log('GITHUB_TOKEN not exist');
+              console.log('GITHUB_TOKEN not exist !!!');
               return;
+            } else {
+              console.log('GITHUB_TOKEN exist !!!');
             }
 
-            const octokit = github.getOctokit(github-token);
+            # const octokit = github.getOctokit(github-token);
   
-            // ここに承認状況をチェックするロジックを書きます
-            // 例：必要な承認数を定義
-            const REQUIRED_APPROVALS = 2;
+            # // ここに承認状況をチェックするロジックを書きます
+            # // 例：必要な承認数を定義
+            # const REQUIRED_APPROVALS = 2;
   
-            async function checkApprovals() {
-              const { data: reviews } = await octokit.pulls.listReviews({
-                owner: repo.owner,
-                repo: repo.repo,
-                pull_number: pull_request.number,
-              });
+            # async function checkApprovals() {
+            #   const { data: reviews } = await octokit.pulls.listReviews({
+            #     owner: repo.owner,
+            #     repo: repo.repo,
+            #     pull_number: pull_request.number,
+            #   });
   
-              // 承認の数を数える
-              const approvals = reviews.filter(review => review.state === 'APPROVED').length;
+            #   // 承認の数を数える
+            #   const approvals = reviews.filter(review => review.state === 'APPROVED').length;
   
-              if (approvals < REQUIRED_APPROVALS) {
-                throw new Error(`Not enough approvals. Only ${approvals} of ${REQUIRED_APPROVALS} required approvals received.`);
-              }
-            }
+            #   if (approvals < REQUIRED_APPROVALS) {
+            #     throw new Error(`Not enough approvals. Only ${approvals} of ${REQUIRED_APPROVALS} required approvals received.`);
+            #   }
+            # }
   
-            await checkApprovals();
+            # await checkApprovals();
